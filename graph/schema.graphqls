@@ -1,0 +1,57 @@
+# Types definition
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
+  courses: [Course!]
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String
+  category: [Category!]
+  chapters: [Chapter!]
+}
+
+type Chapter {
+  id: ID!
+  name: String!
+  courses: [Course!]
+  category: [Category!]
+}
+
+# Inputs definition
+
+input NewCategory {
+  name: String!
+  description: String!
+}
+
+input NewCourse {
+  name: String!
+  description: String!
+  category: ID!
+}
+
+input NewChapter {
+  name: String!
+  course: ID!
+}
+
+# Quary
+
+type Query {
+  courses: [Course]
+  categories: [Category]
+  chapters: [Chapter]
+}
+
+# Mutations
+
+type Mutation {
+  createCategory(input: NewCategory!): Category
+  createCourse(input: NewCourse!): Course
+  createChapter(input: NewChapter!): Chapter
+}

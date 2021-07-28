@@ -6,13 +6,24 @@ package graph
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/LuizEduardoCardozo/go-graphql/graph/generated"
 	"github.com/LuizEduardoCardozo/go-graphql/graph/model"
 )
 
 func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	randomId := time.Now()
+
+	category := model.Category{
+		ID:          fmt.Sprintf("T%d", randomId),
+		Name:        input.Name,
+		Description: &input.Description,
+	}
+
+	r.Categories = append(r.Categories, &category)
+
+	return &category, nil
 }
 
 func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error) {
@@ -24,15 +35,15 @@ func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewCha
 }
 
 func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Courses, nil
 }
 
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Categories, nil
 }
 
 func (r *queryResolver) Chapters(ctx context.Context) ([]*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Chapters, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
